@@ -11,7 +11,7 @@ import { fetchApiRef, useApi } from '@backstage/core-plugin-api';
 import useAsync from 'react-use/lib/useAsync';
 import { useEntity } from '@backstage/plugin-catalog-react';
 
-import { ModelstableComponent, TeststableComponent, Manifest, Catalog } from '../ExampleFetchComponent';
+import { ModelstableComponent, TeststableComponent, Manifest, Catalog } from '../DbtFetchComponent';
 
 function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifest_error: string } {
   const { entity } = useEntity();
@@ -54,7 +54,7 @@ function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_err
   return { catalog, catalog_loading, catalog_error }
 }
 
-export const ExampleComponent = () => {
+export const DbtComponent = () => {
 
   const { catalog, catalog_loading, catalog_error } = getCatalog();
 

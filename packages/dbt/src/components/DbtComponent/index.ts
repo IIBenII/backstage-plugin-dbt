@@ -1,0 +1,1 @@
+export { DbtComponent } from './DbtComponent';

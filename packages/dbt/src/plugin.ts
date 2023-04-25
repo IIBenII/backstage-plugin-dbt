@@ -24,7 +24,7 @@ export const DbtPage = dbtPlugin.provide(
   createRoutableExtension({
     name: 'DbtPage',
     component: () =>
-      import('./components/ExampleComponent').then(m => m.ExampleComponent),
+      import('./components/DbtComponent').then(m => m.DbtComponent),
     mountPoint: rootRouteRef,
   }),
 );
