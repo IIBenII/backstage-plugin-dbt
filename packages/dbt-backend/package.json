@@ -1,5 +1,5 @@
 {
-  "name": "@iibenii/backstage-plugin-dbt-backend",
+  "name": "@iiben_orgii/backstage-plugin-dbt-backend",
   "version": "0.1.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
