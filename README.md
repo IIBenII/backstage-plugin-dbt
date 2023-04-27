@@ -1,6 +1,6 @@
-<h1 align="center">Backstage Plugin DBT</h1>
+<h1 align="center">Backstage Plugin dbt</h1>
 
-> [Backstage](https://backstage.io/) plugins to view [DBT doc](https://www.getdbt.com/product/data-documentation/).
+> [Backstage](https://backstage.io/) plugins to view [dbt doc](https://www.getdbt.com/product/data-documentation/).
 
 ## Table of contents
 
@@ -14,8 +14,8 @@
 
 ## Features
 
-- List all DBT models and tests
-- Get details on DBT models and tests like:
+- List all dbt models and tests
+- Get details on dbt models and tests like:
    - Documentations
    - Stats
    - Columns
@@ -52,7 +52,7 @@ yarn --cwd packages/app add @iiben_orgii/backstage-plugin-dbt
 yarn --cwd packages/backend add @iiben_orgii/backstage-plugin-dbt-backend
 ```
 
-2. Add a new DBT tab to the entity page.
+2. Add a new dbt tab to the entity page.
 
 `packages/app/src/components/catalog/EntityPage.tsx`
 
@@ -65,7 +65,7 @@ import { DbtPage, isDBTAvailable } from "@iiben_orgii/backstage-plugin-dbt"
 const serviceEntityPage = (
     <EntityLayout>
         {/* Place the following section where you want the tab to appear */}
-        <EntityLayout.Route if={isDBTAvailable} path="/dbt" title="DBT">
+        <EntityLayout.Route if={isDBTAvailable} path="/dbt" title="dbt">
             <DbtPage />
         </EntityLayout.Route>
     </EntityLayout>
