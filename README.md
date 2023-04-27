@@ -1,17 +1,46 @@
 <h1 align="center">Backstage Plugin DBT</h1>
 
+> [Backstage](https://backstage.io/) plugins to view [DBT doc](https://www.getdbt.com/product/data-documentation/).
+
 ## Table of contents
 
 <!-- toc -->
 
+-   [Features](#features)
 -   [Limitations](#limitations)
+-   [Screenshots](#screenshots)
 -   [Setup](#setup)
 -   [Usage](#usage)
+
+## Features
+
+- List all DBT models and tests
+- Get details on DBT models and tests like:
+   - Documentations
+   - Stats
+   - Columns
+   - Dependency graph
+   - Code source (raw and compiled) 
 
 ## Limitations
 
 **This version only support Google Cloud Storage as backend to store `manifest.json`
 and `catalog.json` files.**
+
+## Screenshots
+
+Landing page:
+![Landing page](doc/landing.png)
+
+Model details:
+![](doc/model_details_1.png)
+![](doc/model_details_dependency.png)
+![](doc/model_details_code.png)
+
+Test details:
+![](doc/test_details.png)
+
+Note: catalog and manifest come from [https://github.com/fivetran/dbt_shopify/tree/main](https://github.com/fivetran/dbt_shopify/tree/main)
 
 ## Setup
 
