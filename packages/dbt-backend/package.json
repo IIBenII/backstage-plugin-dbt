@@ -13,6 +13,10 @@
   "backstage": {
     "role": "backend-plugin"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IIBenII/backstage-plugin-dbt"
+  },
   "scripts": {
     "start": "backstage-cli package start",
     "types": "tsc",
