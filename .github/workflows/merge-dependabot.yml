@@ -21,5 +21,6 @@ jobs:
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: gh pr merge --auto --merge "$PR_URL"
         env:
-          GH_TOKEN: ${{ secrets.DEPENDABOT_GH_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           PR_URL: ${{github.event.pull_request.html_url}}
