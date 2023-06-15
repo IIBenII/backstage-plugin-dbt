@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.1...v0.2.2-alpha.0) (2023-06-15)
+
+### Bug Fixes
+
+- fix base url ([#69](https://github.com/IIBenII/backstage-plugin-dbt/issues/69)) ([c509995](https://github.com/IIBenII/backstage-plugin-dbt/commit/c50999550150472de6b69f868ff3e66b0fd97752))
+
 ## [0.2.1](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.1-alpha.1...v0.2.1) (2023-04-27)
 
 **Note:** Version bump only for package @iiben_orgii/backstage-plugin-dbt
