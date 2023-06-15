@@ -7,7 +7,7 @@ import {
   ResponseErrorPanel
 } from '@backstage/core-components';
 
-import { fetchApiRef, useApi } from '@backstage/core-plugin-api';
+import { fetchApiRef, useApi, configApiRef } from '@backstage/core-plugin-api';
 import useAsync from 'react-use/lib/useAsync';
 import { useEntity } from '@backstage/plugin-catalog-react';
 
@@ -16,9 +16,13 @@ import { ModelstableComponent, TeststableComponent, Manifest, Catalog } from '..
 function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifest_error: string } {
   const { entity } = useEntity();
   const { fetch } = useApi(fetchApiRef);
+
+  const config = useApi(configApiRef);
+  const base_url = config.get('backend.baseUrl');
+
   const { value, loading, error } = useAsync(async (): Promise<Manifest> => {
     const response = await fetch(
-      `http://localhost:7007/api/dbt/manifest/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/manifest/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
@@ -36,10 +40,12 @@ function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_err
   const { entity } = useEntity();
   const { fetch } = useApi(fetchApiRef);
 
+  const config = useApi(configApiRef);
+  const base_url = config.get('backend.baseUrl');
 
   const { value, loading, error } = useAsync(async (): Promise<Catalog> => {
     const response = await fetch(
-      `http://localhost:7007/api/dbt/catalog/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/catalog/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
