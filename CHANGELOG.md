@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2-alpha.2](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.2-alpha.1...v0.2.2-alpha.2) (2023-06-15)
+
+### Bug Fixes
+
+- yarn.lock ([#79](https://github.com/IIBenII/backstage-plugin-dbt/issues/79)) ([068122d](https://github.com/IIBenII/backstage-plugin-dbt/commit/068122d970bb782a236a68f63bdac258c8607847))
+
 ## [0.2.2-alpha.1](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.2-alpha.0...v0.2.2-alpha.1) (2023-06-15)
 
 **Note:** Version bump only for package root
