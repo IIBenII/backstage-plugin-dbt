@@ -20,9 +20,21 @@ function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifes
   const config = useApi(configApiRef);
   const base_url = config.get('backend.baseUrl');
 
+  let doc_bucket = "";
+
+  if (entity.metadata.annotations?.["dbtdoc-bucket"] != null) {
+    doc_bucket = entity.metadata.annotations?.["dbtdoc-bucket"];
+  }
+  else if (config.get('dbtdoc.bucket') != null) {
+    doc_bucket = config.get('dbtdoc.bucket');
+  }
+  else {
+    throw 'dbt doc bucket not defined in app-conf.yaml nor catalog-info.yaml'
+  }
+
   const { value, loading, error } = useAsync(async (): Promise<Manifest> => {
     const response = await fetch(
-      `${base_url}/api/dbt/manifest/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/manifest/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
@@ -43,9 +55,21 @@ function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_err
   const config = useApi(configApiRef);
   const base_url = config.get('backend.baseUrl');
 
+  let doc_bucket = "";
+
+  if (entity.metadata.annotations?.["dbtdoc-bucket"] != null) {
+    doc_bucket = entity.metadata.annotations?.["dbtdoc-bucket"];
+  }
+  else if (config.get('dbtdoc.bucket') != null) {
+    doc_bucket = config.get('dbtdoc.bucket');
+  }
+  else {
+    throw 'dbt doc bucket not defined in app-conf.yaml nor catalog-info.yaml'
+  }
+
   const { value, loading, error } = useAsync(async (): Promise<Catalog> => {
     const response = await fetch(
-      `${base_url}/api/dbt/catalog/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/catalog/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
