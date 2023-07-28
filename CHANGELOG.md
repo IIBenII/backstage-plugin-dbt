@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.0...v0.3.1) (2023-07-28)
+
+### Bug Fixes
+
+- isDBTAvailable not working when global bucket is set ([#108](https://github.com/IIBenII/backstage-plugin-dbt/issues/108)) ([41b428d](https://github.com/IIBenII/backstage-plugin-dbt/commit/41b428de39da31072254e70513f909bc7eae585f))
+
 # [0.3.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.0-alpha.1...v0.3.0) (2023-07-28)
 
 **Note:** Version bump only for package root
