@@ -1,6 +1,6 @@
 {
   "name": "@iiben_orgii/backstage-plugin-dbt",
-  "version": "0.3.0-alpha.0",
+  "version": "0.3.0-alpha.1",
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "license": "Apache-2.0",
