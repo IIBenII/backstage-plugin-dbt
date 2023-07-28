@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.2...v0.3.0-alpha.0) (2023-07-27)
+
+### Features
+
+- Add bucket definition in app-conf.yaml ([#106](https://github.com/IIBenII/backstage-plugin-dbt/issues/106)) ([45adc2a](https://github.com/IIBenII/backstage-plugin-dbt/commit/45adc2a8dd58273f1096295d2cafaab52821855b))
+
 ## [0.2.2](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.2.2-alpha.2...v0.2.2) (2023-06-15)
 
 **Note:** Version bump only for package @iiben_orgii/backstage-plugin-dbt
