@@ -13,16 +13,34 @@ import { useEntity } from '@backstage/plugin-catalog-react';
 
 import { ModelstableComponent, TeststableComponent, Manifest, Catalog } from '../DbtFetchComponent';
 
-function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifest_error: string } {
+function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifest_error: Error } {
   const { entity } = useEntity();
   const { fetch } = useApi(fetchApiRef);
 
   const config = useApi(configApiRef);
   const base_url = config.get('backend.baseUrl');
 
+  let doc_bucket = "";
+
+  if (entity.metadata.annotations?.["dbtdoc-bucket"] != null) {
+    doc_bucket = entity.metadata.annotations?.["dbtdoc-bucket"];
+  }
+  else if (config.getOptionalString('dbtdoc.bucket')) {
+    doc_bucket = config.getOptionalString('dbtdoc.bucket') || '';
+  }
+  else {
+    const manifest = {};
+    const manifest_loading = false;
+    const manifest_error: Error = {
+      name: 'Config Error',
+      message: 'dbt doc bucket not defined in app-conf.yaml nor catalog-info.yaml'
+    };
+    return { manifest, manifest_loading, manifest_error }
+  }
+
   const { value, loading, error } = useAsync(async (): Promise<Manifest> => {
     const response = await fetch(
-      `${base_url}/api/dbt/manifest/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/manifest/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
@@ -36,16 +54,34 @@ function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifes
   return { manifest, manifest_loading, manifest_error }
 }
 
-function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_error: string } {
+function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_error: Error } {
   const { entity } = useEntity();
   const { fetch } = useApi(fetchApiRef);
 
   const config = useApi(configApiRef);
   const base_url = config.get('backend.baseUrl');
 
+  let doc_bucket = '';
+
+  if (entity.metadata.annotations?.["dbtdoc-bucket"] != null) {
+    doc_bucket = entity.metadata.annotations?.["dbtdoc-bucket"];
+  }
+  else if (config.getOptionalString('dbtdoc.bucket')) {
+    doc_bucket = config.getOptionalString('dbtdoc.bucket') || '';
+  }
+  else {
+    const catalog = {};
+    const catalog_loading = false;
+    const catalog_error: Error = {
+      name: 'Config Error',
+      message: 'dbt doc bucket not defined in app-conf.yaml nor catalog-info.yaml'
+    };
+    return { catalog, catalog_loading, catalog_error }
+  }
+
   const { value, loading, error } = useAsync(async (): Promise<Catalog> => {
     const response = await fetch(
-      `${base_url}/api/dbt/catalog/${entity.metadata.annotations?.["dbtdoc-bucket"]}/${entity.kind}/${entity.metadata.name}`
+      `${base_url}/api/dbt/catalog/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
     );
     const data = await response.json();
     return data;
@@ -66,7 +102,6 @@ export const DbtComponent = () => {
 
   const { manifest, manifest_loading, manifest_error } = getManifest();
 
-  console.log(manifest)
 
   if (manifest_loading || catalog_loading) {
     return <Progress />;

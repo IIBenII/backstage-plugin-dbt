@@ -110,6 +110,41 @@ async function main() {
 
 ## Usage
 
+### Single bucket model
+
+You can define one bucket with all your manifest and catalog files.
+
+Add a file `application/packages/app/config.d.ts`:
+```ts
+export interface Config {
+    dbtdoc: {
+        /**
+         * Frontend root URL
+         * @visibility frontend
+         */
+        bucket: string;
+    };
+}
+```
+
+Update the file `application/packages/app/package.json` with
+
+```json
+  "files": [
+    "dist",
+    "config.d.ts"
+  ],
+  "configSchema": "config.d.ts"
+```
+
+Then you can add to your `app-config.yaml`:
+```yaml
+dbtdoc:
+  bucket: your-bucket-123
+```
+
+### One bucket for each application or overwrite the global config
+
 Add `dbtdoc-bucket` as annotation in `catalog-info.yaml`:
 
 ```yaml
@@ -124,6 +159,10 @@ metadata:
   annotations:
     dbtdoc-bucket: "my-bucket"
 ```
+
+### Files path in the bucket
+
+**Following path must be respect regardless your bucket setup (single or multi).**
 
 You can upload your `manifest.json` and `catalog.json` to a GCS Bucket as follow:
 - `{dbtdoc-bucket}/{kind}/{name}/manifest.json`
