@@ -132,6 +132,9 @@ const DrawerContent = ({
 
   const classes = useDrawerContentStyles();
 
+  if (manifest.parent_map === undefined || manifest.child_map === undefined || catalog.nodes === undefined) {
+    return (<></>)
+  }
   const parent = manifest.parent_map[selected_node.unique_id]
   const child = manifest.child_map[selected_node.unique_id]
 

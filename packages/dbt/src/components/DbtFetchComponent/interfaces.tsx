@@ -38,15 +38,15 @@ export type ParentMap = {
 }
 
 export type Manifest = {
-    nodes: Record<string, Node>;
-    child_map: Record<string, ChildMap>;
-    parent_map: Record<string, ParentMap>;
+    nodes?: Record<string, Node>;
+    child_map?: Record<string, ChildMap>;
+    parent_map?: Record<string, ParentMap>;
 }
 
 
 export type Catalog = {
-    nodes: Record<string, NodeCatalog>;
-    stats: Record<string, Stats>;
+    nodes?: Record<string, NodeCatalog>;
+    stats?: Record<string, Stats>;
 }
 
 export type ModelsTableType = {
