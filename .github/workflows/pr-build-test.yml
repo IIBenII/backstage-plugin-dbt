@@ -1,0 +1,26 @@
+name: Build on PR
+
+on: pull_request
+
+
+jobs:
+    buid:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  # setting this should create the npmrc with $NODE_AUTH_TOKEN
+                  registry-url: "https://registry.npmjs.org"
+
+            - name: Bootstrap lerna
+              run: yarn
+
+            - name: Lerna build
+              run: yarn build
