@@ -1,40 +1,59 @@
 import { errorHandler } from '@backstage/backend-common';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
 
-const { Storage } = require('@google-cloud/storage');
-
-// Creates a client
-const storage = new Storage();
-
+/**
+ * Abstracts the storage provider to allow for different
+ * storage providers to be used.
+ */
+export interface StorageProvider {
+  /**
+   * Download a file from the storage provider.
+   * @param bucket - The name of the storage bucket.
+   * @param filePath - The path to the file within the bucket.
+   * @returns A Promise that resolves to the file's contents as a Buffer.
+   */
+  downloadFile(bucket: string, filePath: string): Promise<Buffer>;
+}
 
 export interface RouterOptions {
   logger: Logger;
+  storageProvider: StorageProvider;
 }
 
-export async function createRouter(
-  options: RouterOptions,
-): Promise<express.Router> {
-  const { logger } = options;
-
+/**
+ * Creates an Express router for handling storage-related requests.
+ * @param options - Configuration options for the router.
+ * @returns An Express router that handles storage requests.
+ */
+export function createRouter(options: RouterOptions): express.Router {
+  const { logger, storageProvider } = options;
   const router = Router();
   router.use(express.json());
 
-  router.get('/manifest/:bucket/:kind/:name', async (req, response) => {
-    const file_path = `${req.params.kind}/${req.params.name}/manifest.json`
-    logger.info(`Get manifest under ${req.params.bucket}/${req.params.kind}/${req.params.name}/manifest.json`)
-    const contents = await storage.bucket(req.params.bucket).file(file_path).download();
-    const result = JSON.parse(contents.toString())
-    response.json(result);
+  async function handleRequest(req: Request, res: Response, type: 'manifest' | 'catalog') {
+    const { bucket, kind, name } = req.params;
+    const filePath = `${kind}/${name}/${type}.json`;
+    const fullPath = `${bucket}/${filePath}`;
+
+    try {
+      logger.info(`Get ${type} under ${fullPath}`);
+      const contents = await storageProvider.downloadFile(bucket, filePath);
+      const result = JSON.parse(contents.toString());
+      res.json(result);
+    } catch (error: any) {
+      logger.error(`Error getting ${type} under ${fullPath}: ${error.message}`);
+      res.status(500).json({ error: `Error getting ${type} under ${fullPath}: ${error.message}` });
+    }
+  }
+
+  router.get('/manifest/:bucket/:kind/:name', async (req: Request, res: Response) => {
+    await handleRequest(req, res, 'manifest');
   });
 
-  router.get('/catalog/:bucket/:kind/:name', async (req, response) => {
-    const file_path = `${req.params.kind}/${req.params.name}/catalog.json`
-    logger.info(`Get catalog under ${req.params.bucket}/${req.params.kind}/${req.params.name}/catalog.json`)
-    const contents = await storage.bucket(req.params.bucket).file(file_path).download();
-    const result = JSON.parse(contents.toString())
-    response.json(result);
+  router.get('/catalog/:bucket/:kind/:name', async (req: Request, res: Response) => {
+    await handleRequest(req, res, 'catalog');
   });
 
   router.use(errorHandler());
