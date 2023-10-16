@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* add AWS S3 Support ([#176](https://github.com/IIBenII/backstage-plugin-dbt/issues/176)) ([1e5a9d9](https://github.com/IIBenII/backstage-plugin-dbt/commit/1e5a9d996b1bd15e0fec08d88571e3bbda70a420))
+* add AWS S3 Support ([#176](https://github.com/IIBenII/backstage-plugin-dbt/pull/165)) ([4aebaeb](https://github.com/IIBenII/backstage-plugin-dbt/commit/4aebaebb8b1d9b4489e59ad5df9c2581c0282c7d))
 
 
 ### BREAKING CHANGES
