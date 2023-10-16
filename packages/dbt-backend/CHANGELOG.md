@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2023-10-16)
+
+
+### Bug Fixes
+
+* Changelog reference to right PR ([#177](https://github.com/IIBenII/backstage-plugin-dbt/issues/177)) ([ee4c8cb](https://github.com/IIBenII/backstage-plugin-dbt/commit/ee4c8cb601d3eccb9efdfa155f2d872081a6fd8e))
+
+
+
+
+
 # [1.0.0-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.4-alpha.0...v1.0.0-alpha.0) (2023-10-16)
 
 
