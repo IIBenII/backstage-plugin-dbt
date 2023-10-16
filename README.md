@@ -6,26 +6,29 @@
 
 <!-- toc -->
 
--   [Features](#features)
--   [Limitations](#limitations)
--   [Screenshots](#screenshots)
--   [Setup](#setup)
--   [Usage](#usage)
+- [Features](#features)
+- [Limitations](#limitations)
+- [Screenshots](#screenshots)
+- [Setup](#setup)
+- [Usage](#usage)
 
 ## Features
 
 - List all dbt models and tests
 - Get details on dbt models and tests like:
-   - Documentations
-   - Stats
-   - Columns
-   - Dependency graph
-   - Code source (raw and compiled) 
+  - Documentations
+  - Stats
+  - Columns
+  - Dependency graph
+  - Code source (raw and compiled)
 
 ## Limitations
 
-**This version only support Google Cloud Storage as backend to store `manifest.json`
-and `catalog.json` files.**
+As of now, the plugin only support the following backends:
+
+- [x] Google Cloud Storage
+- [x] AWS S3
+- [ ] Azure Blob Storage
 
 ## Screenshots
 
@@ -59,16 +62,16 @@ yarn --cwd packages/backend add @iiben_orgii/backstage-plugin-dbt-backend
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
 
-import { DbtPage, isDBTAvailable } from "@iiben_orgii/backstage-plugin-dbt"
+import { DbtPage, isDBTAvailable } from "@iiben_orgii/backstage-plugin-dbt";
 
 // Farther down at the serviceEntityPage declaration
 const serviceEntityPage = (
-    <EntityLayout>
-        {/* Place the following section where you want the tab to appear */}
-        <EntityLayout.Route if={isDBTAvailable} path="/dbt" title="dbt">
-            <DbtPage />
-        </EntityLayout.Route>
-    </EntityLayout>
+  <EntityLayout>
+    {/* Place the following section where you want the tab to appear */}
+    <EntityLayout.Route if={isDBTAvailable} path="/dbt" title="dbt">
+      <DbtPage />
+    </EntityLayout.Route>
+  </EntityLayout>
 );
 ```
 
@@ -78,15 +81,21 @@ const serviceEntityPage = (
 
 ```ts
 // packages/backend/src/plugins/dbt.ts
-import { createRouter } from '@iiben_orgii/backstage-plugin-dbt-backend';
-import { Router } from 'express';
-import { PluginEnvironment } from '../types';
+import {
+  createRouter,
+  GoogleStorageProvider,
+} from "@iiben_orgii/backstage-plugin-dbt-backend";
+import { Router } from "express";
+import { PluginEnvironment } from "../types";
+
+const storageProvider = new GoogleStorageProvider();
 
 export default async function createPlugin(
   env: PluginEnvironment,
 ): Promise<Router> {
   return await createRouter({
     logger: env.logger,
+    storageProvider: storageProvider,
   });
 }
 ```
@@ -97,14 +106,14 @@ then you have to add the route as follows:
 
 ```ts
 // packages/backend/src/index.ts
-import dbt from './plugins/dbt';
+import dbt from "./plugins/dbt";
 
 async function main() {
-    //...
-    const dbtEnv = useHotMemoize(module, () => createEnv('dbt'));
-    //...
-    apiRouter.use('/dbt', await dbt(dbtEnv));
-    //...
+  //...
+  const dbtEnv = useHotMemoize(module, () => createEnv("dbt"));
+  //...
+  apiRouter.use("/dbt", await dbt(dbtEnv));
+  //...
 }
 ```
 
@@ -115,15 +124,16 @@ async function main() {
 You can define one bucket with all your manifest and catalog files.
 
 Add a file `application/packages/app/config.d.ts`:
+
 ```ts
 export interface Config {
-    dbtdoc: {
-        /**
-         * Frontend root URL
-         * @visibility frontend
-         */
-        bucket: string;
-    };
+  dbtdoc: {
+    /**
+     * Frontend root URL
+     * @visibility frontend
+     */
+    bucket: string;
+  };
 }
 ```
 
@@ -138,6 +148,7 @@ Update the file `application/packages/app/package.json` with
 ```
 
 Then you can add to your `app-config.yaml`:
+
 ```yaml
 dbtdoc:
   bucket: your-bucket-123
@@ -165,6 +176,7 @@ metadata:
 **Following path must be respect regardless your bucket setup (single or multi).**
 
 You can upload your `manifest.json` and `catalog.json` to a GCS Bucket as follow:
+
 - `{dbtdoc-bucket}/{kind}/{name}/manifest.json`
 - `{dbtdoc-bucket}/{kind}/{name}/catalog.json`
 
