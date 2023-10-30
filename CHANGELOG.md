@@ -3,36 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.0...v1.0.1-alpha.0) (2023-10-30)
+
+**Note:** Version bump only for package root
+
 # [1.0.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.0-alpha.1...v1.0.0) (2023-10-23)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 # [1.0.0-alpha.1](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2023-10-16)
-
 
 ### Bug Fixes
 
-* Changelog reference to right PR ([#177](https://github.com/IIBenII/backstage-plugin-dbt/issues/177)) ([ee4c8cb](https://github.com/IIBenII/backstage-plugin-dbt/commit/ee4c8cb601d3eccb9efdfa155f2d872081a6fd8e))
-
-
-
-
+- Changelog reference to right PR ([#177](https://github.com/IIBenII/backstage-plugin-dbt/issues/177)) ([ee4c8cb](https://github.com/IIBenII/backstage-plugin-dbt/commit/ee4c8cb601d3eccb9efdfa155f2d872081a6fd8e))
 
 # [1.0.0-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.4-alpha.0...v1.0.0-alpha.0) (2023-10-16)
 
-
 ### Features
 
-* add AWS S3 Support ([#176](https://github.com/IIBenII/backstage-plugin-dbt/pull/165)) ([4aebaeb](https://github.com/IIBenII/backstage-plugin-dbt/commit/4aebaebb8b1d9b4489e59ad5df9c2581c0282c7d))
-
+- add AWS S3 Support ([#176](https://github.com/IIBenII/backstage-plugin-dbt/pull/165)) ([4aebaeb](https://github.com/IIBenII/backstage-plugin-dbt/commit/4aebaebb8b1d9b4489e59ad5df9c2581c0282c7d))
 
 ### BREAKING CHANGES
 
-* You need to import the storage provider when adding the pluging
+- You need to import the storage provider when adding the pluging
 
 ```ts
 // packages/backend/src/plugins/dbt.ts
@@ -55,33 +48,17 @@ export default async function createPlugin(
 }
 ```
 
-
-
-
-
 ## [0.3.4-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.3...v0.3.4-alpha.0) (2023-10-16)
 
 **Note:** Version bump only for package root
-
-
-
-
 
 ## [0.3.3](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.3-alpha.0...v0.3.3) (2023-07-31)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 ## [0.3.3-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.2...v0.3.3-alpha.0) (2023-07-31)
 
 **Note:** Version bump only for package root
-
-
-
-
 
 ## [0.3.2](https://github.com/IIBenII/backstage-plugin-dbt/compare/v0.3.2-alpha.0...v0.3.2) (2023-07-31)
 
