@@ -185,7 +185,7 @@ dbtdoc:
 
 *Limitation: all dbt docs must be saved on same backend type (GoogleStorage or S3)*
 
-Add `dbtdoc-bucket` as annotation in `catalog-info.yaml`:
+Add `dbtdoc-bucket` as annotation in `catalog-info.yaml`. Optionally, add the `dbtdoc-path` annotation if your GCS bucket structure does not conform to the expected structure.
 
 ```yaml
 apiVersion: backstage.io/v1alpha1
@@ -198,6 +198,7 @@ metadata:
   name: "test"
   annotations:
     dbtdoc-bucket: "my-bucket"
+    dbtdoc-path: "optional/override/path" # Optional
 ```
 
 Then you can add to your `app-config.yaml`:
@@ -211,12 +212,16 @@ dbtdoc:
 
 **Following path must be respect regardless your bucket setup (single or multi).**
 
+If using the multi setup, you can override the `{kind}/{name}` portion of the path using the `dbtdoc-path` annotation.
+
 You can upload your `manifest.json` and `catalog.json` to a GCS Bucket as follow:
 
 - `{dbtdoc-bucket}/{kind}/{name}/manifest.json`
 - `{dbtdoc-bucket}/{kind}/{name}/catalog.json`
 
-For authentication to GCS Bucket, the plugin use ADC credentials [https://cloud.google.com/docs/authentication/provide-credentials-adc](https://cloud.google.com/docs/authentication/provide-credentials-adc).
+### Authentication
+
+For authentification to GCS Bucket, the plugin use ADC credentials [https://cloud.google.com/docs/authentication/provide-credentials-adc](https://cloud.google.com/docs/authentication/provide-credentials-adc).
 
 ## Update from v1 to v2
 

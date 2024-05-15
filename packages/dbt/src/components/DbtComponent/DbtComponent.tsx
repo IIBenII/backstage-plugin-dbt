@@ -37,11 +37,19 @@ function getManifest(): { manifest: Manifest, manifest_loading: boolean, manifes
     };
     return { manifest, manifest_loading, manifest_error }
   }
+  let doc_bucket_path = "";
+  if (entity.metadata.annotations?.["dbtdoc-path"] != null) {
+    doc_bucket_path = entity.metadata.annotations?.["dbtdoc-path"].replace(/^\/|\/$/g, "");;
+  }
 
   const { value, loading, error } = useAsync(async (): Promise<Manifest> => {
-    const response = await fetch(
-      `${base_url}/api/dbt/manifest/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
-    );
+    let url = `${base_url}/api/dbt/manifest/${doc_bucket}/${entity.kind}/${entity.metadata.name}`;
+
+    if (doc_bucket_path) {
+      const params = new URLSearchParams({ bucketPath: doc_bucket_path });
+      url = `${url}?${params.toString()}`;
+    }
+    const response = await fetch(url);
     const data = await response.json();
     return data;
   }, []);
@@ -78,11 +86,19 @@ function getCatalog(): { catalog: Catalog, catalog_loading: boolean, catalog_err
     };
     return { catalog, catalog_loading, catalog_error }
   }
+  let doc_bucket_path = "";
+  if (entity.metadata.annotations?.["dbtdoc-path"] != null) {
+    doc_bucket_path = entity.metadata.annotations?.["dbtdoc-path"].replace(/^\/|\/$/g, "");;
+  }
 
-  const { value, loading, error } = useAsync(async (): Promise<Catalog> => {
-    const response = await fetch(
-      `${base_url}/api/dbt/catalog/${doc_bucket}/${entity.kind}/${entity.metadata.name}`
-    );
+  const { value, loading, error } = useAsync(async (): Promise<Manifest> => {
+    let url = `${base_url}/api/dbt/catalog/${doc_bucket}/${entity.kind}/${entity.metadata.name}`;
+
+    if (doc_bucket_path) {
+      const params = new URLSearchParams({ bucketPath: doc_bucket_path });
+      url = `${url}?${params.toString()}`;
+    }
+    const response = await fetch(url);
     const data = await response.json();
     return data;
   }, []);
