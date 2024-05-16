@@ -1,10 +1,11 @@
 import { Storage } from '@google-cloud/storage';
+import { StorageProvider } from './router';
 
 /**
  * GoogleStorageProvider is a class that provides functionality for downloading files
  * from Google Cloud Storage.
  */
-export class GoogleStorageProvider {
+export class GoogleStorageProvider implements StorageProvider {
   private storage = new Storage();
 
   /**

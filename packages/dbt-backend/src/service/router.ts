@@ -3,6 +3,10 @@ import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
 
+import { GoogleStorageProvider } from './googleStorage';
+import { AwsS3StorageProvider } from './awsS3Storage';
+import { Config } from '@backstage/config';
+
 /**
  * Abstracts the storage provider to allow for different
  * storage providers to be used.
@@ -19,7 +23,7 @@ export interface StorageProvider {
 
 export interface RouterOptions {
   logger: Logger;
-  storageProvider: StorageProvider;
+  config: Config;
 }
 
 /**
@@ -27,15 +31,31 @@ export interface RouterOptions {
  * @param options - Configuration options for the router.
  * @returns An Express router that handles storage requests.
  */
-export function createRouter(options: RouterOptions): express.Router {
-  const { logger, storageProvider } = options;
+export async function createRouter(options: RouterOptions): Promise<express.Router> {
+  const { logger, config } = options;
   const router = Router();
   router.use(express.json());
 
   async function handleRequest(req: Request, res: Response, type: 'manifest' | 'catalog') {
     const { bucket, kind, name } = req.params;
+    const backend = config.getString('dbtdoc.backend')
+
     const filePath = `${kind}/${name}/${type}.json`;
     const fullPath = `${bucket}/${filePath}`;
+
+    let storageProvider: StorageProvider;
+
+    if (backend == "GoogleStorage") {
+      storageProvider = new GoogleStorageProvider();
+    }
+    else if (backend == "S3") {
+      storageProvider = new AwsS3StorageProvider();
+    }
+    else {
+      logger.error(`Storage Provider not set, must be 'GoogleStorage or 'S3'`);
+      res.status(500).json({ error: `Storage Provider not set, must be 'GoogleStorage or 'S3'` });
+      return
+    }
 
     try {
       logger.info(`Get ${type} under ${fullPath}`);
