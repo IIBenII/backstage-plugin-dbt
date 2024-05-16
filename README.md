@@ -2,6 +2,12 @@
 
 > [Backstage](https://backstage.io/) plugins to view [dbt doc](https://www.getdbt.com/product/data-documentation/).
 
+[![npm version](https://badge.fury.io/js/@iiben_orgii%2Fbackstage-plugin-dbt.svg)](https://badge.fury.io/js/@iiben_orgii%2Fbackstage-plugin-dbt)
+![latest workflow pr](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/pr-build-test.yml/badge.svg)
+![latest workflow release](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/pre-release.yml/badge.svg)
+![latest workflow prerelease](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/release.yml/badge.svg)
+![Servier Inspired](https://raw.githubusercontent.com/servierhub/.github/main/badges/inspired.svg)
+
 ## Table of contents
 
 <!-- toc -->
@@ -10,7 +16,10 @@
 - [Limitations](#limitations)
 - [Screenshots](#screenshots)
 - [Setup](#setup)
+  - [Legacy backend system](#legacy-backend-system)
+  - [New backend system](#new-backend-system)
 - [Usage](#usage)
+- [Update from v1 to v2](#update-from-v1-to-v2)
 
 ## Features
 
@@ -75,27 +84,26 @@ const serviceEntityPage = (
 );
 ```
 
-6. Add the `dbt` route by creating the file `packages/backend/src/plugins/dbt.ts`:
+### Legacy backend system
+
+1. Add the `dbt` route by creating the file `packages/backend/src/plugins/dbt.ts`:
 
 `packages/backend/src/plugins/dbt.ts`
 
 ```ts
-// packages/backend/src/plugins/dbt.ts
 import {
   createRouter,
-  GoogleStorageProvider,
 } from "@iiben_orgii/backstage-plugin-dbt-backend";
+
 import { Router } from "express";
 import { PluginEnvironment } from "../types";
-
-const storageProvider = new GoogleStorageProvider();
 
 export default async function createPlugin(
   env: PluginEnvironment,
 ): Promise<Router> {
   return await createRouter({
     logger: env.logger,
-    storageProvider: storageProvider,
+    config: env.config,
   });
 }
 ```
@@ -115,6 +123,24 @@ async function main() {
   apiRouter.use("/dbt", await dbt(dbtEnv));
   //...
 }
+```
+
+### New backend system
+
+In the file: `packages/backend/src/index.ts`
+
+```ts
+import { dbtPlugin } from '@iiben_orgii/backstage-plugin-dbt-backend';
+
+//[...]
+
+const backend = createBackend();
+//[...]
+
+backend.add(dbtPlugin);
+
+//[...]
+backend.start();
 ```
 
 ## Usage
@@ -152,9 +178,12 @@ Then you can add to your `app-config.yaml`:
 ```yaml
 dbtdoc:
   bucket: your-bucket-123
+  backend: GoogleStorage # or S3
 ```
 
 ### One bucket for each application or overwrite the global config
+
+*Limitation: all dbt docs must be saved on same backend type (GoogleStorage or S3)*
 
 Add `dbtdoc-bucket` as annotation in `catalog-info.yaml`:
 
@@ -171,6 +200,13 @@ metadata:
     dbtdoc-bucket: "my-bucket"
 ```
 
+Then you can add to your `app-config.yaml`:
+
+```yaml
+dbtdoc:
+  backend: GoogleStorage # or S3
+```
+
 ### Files path in the bucket
 
 **Following path must be respect regardless your bucket setup (single or multi).**
@@ -180,4 +216,68 @@ You can upload your `manifest.json` and `catalog.json` to a GCS Bucket as follow
 - `{dbtdoc-bucket}/{kind}/{name}/manifest.json`
 - `{dbtdoc-bucket}/{kind}/{name}/catalog.json`
 
-For authentification to GCS Bucket, the plugin use ADC credentials [https://cloud.google.com/docs/authentication/provide-credentials-adc](https://cloud.google.com/docs/authentication/provide-credentials-adc).
+For authentication to GCS Bucket, the plugin use ADC credentials [https://cloud.google.com/docs/authentication/provide-credentials-adc](https://cloud.google.com/docs/authentication/provide-credentials-adc).
+
+## Update from v1 to v2
+
+Update the `app-config.yaml` as follow:
+
+```yaml
+dbtdoc:
+  bucket: your-bucket-123
+  backend: GoogleStorage
+```
+
+or 
+
+```yaml
+dbtdoc:
+  bucket: your-bucket-123
+  backend: S3
+```
+
+**Apply the following changes only if you use the old backend system.**
+
+In v1: `packages/backend/src/plugins/dbt.ts`
+
+```ts
+// packages/backend/src/plugins/dbt.ts
+import {
+  createRouter,
+  GoogleStorageProvider,
+} from "@iiben_orgii/backstage-plugin-dbt-backend";
+import { Router } from "express";
+import { PluginEnvironment } from "../types";
+
+const storageProvider = new GoogleStorageProvider();
+
+export default async function createPlugin(
+  env: PluginEnvironment,
+): Promise<Router> {
+  return await createRouter({
+    logger: env.logger,
+    storageProvider: storageProvider,
+  });
+}
+```
+
+In v2: `packages/backend/src/plugins/dbt.ts`
+
+```ts
+// packages/backend/src/plugins/dbt.ts
+import {
+  createRouter,
+} from "@iiben_orgii/backstage-plugin-dbt-backend";
+
+import { Router } from "express";
+import { PluginEnvironment } from "../types";
+
+export default async function createPlugin(
+  env: PluginEnvironment,
+): Promise<Router> {
+  return await createRouter({
+    logger: env.logger,
+    config: env.config,
+  });
+}
+```

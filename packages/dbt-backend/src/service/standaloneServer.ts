@@ -4,12 +4,7 @@ import { Logger } from 'winston';
 
 // Import the router creation function based on your modularized structure
 import { createRouter, RouterOptions } from './router';
-import { GoogleStorageProvider } from './googleStorage';
-
-// Create the storage provider instance, default
-// uses the Google Cloud Storage provider to maintain
-// regression.
-const storageProvider = new GoogleStorageProvider();
+import { Config } from '@backstage/config';
 
 
 export interface ServerOptions {
@@ -27,11 +22,11 @@ export async function startStandaloneServer(
   // Create router options and include the logger
   const routerOptions: RouterOptions = {
     logger,
-    storageProvider,
+    config: {} as Config,
   };
 
   // Create the router using the modularized router creation function
-  const router = createRouter(routerOptions);
+  const router = await createRouter(routerOptions);
 
   let service = createServiceBuilder(module)
     .setPort(options.port)

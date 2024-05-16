@@ -1,10 +1,11 @@
 import { S3 } from 'aws-sdk';
+import { StorageProvider } from './router';
 
 /**
  * AwsS3StorageProvider is a class that provides functionality for downloading files
  * from Amazon S3 storage using the AWS SDK.
  */
-export class AwsS3StorageProvider {
+export class AwsS3StorageProvider implements StorageProvider {
   private s3 = new S3();
 
   /**
