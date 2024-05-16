@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.1-alpha.0...v2.0.0-alpha.0) (2024-05-16)
+
+### Features
+
+- Add suport for new backend system ([#242](https://github.com/IIBenII/backstage-plugin-dbt/issues/242)) ([bc0a89f](https://github.com/IIBenII/backstage-plugin-dbt/commit/bc0a89f7924c354e3f7888a667d264b96f3e83d3))
+
+### BREAKING CHANGES
+
+- Backend type S3 or Google Storage are now define in `app-config.yaml`. Read the `README.md` to check how to update from v1 to v2
+
 ## [1.0.1-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v1.0.0...v1.0.1-alpha.0) (2023-10-30)
 
 **Note:** Version bump only for package @iiben_orgii/backstage-plugin-dbt-backend
