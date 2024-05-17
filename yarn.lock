@@ -3143,6 +3143,15 @@
     "@emotion/styled" "^11.10.5"
     "@mui/material" "^5.12.2"
 
+"@backstage/theme@^0.5.5":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@backstage/theme/-/theme-0.5.5.tgz#cf6556d123c998612c734d56be60a0c8a211c8d6"
+  integrity sha512-KRgRHCD38tcBkSlkAje+pOY2anfZzaO3QHgv5VqiSL2mpaI/RQLv6/PhRjCcWm/yx5WXBK1S5uG/8x7VeSEcwA==
+  dependencies:
+    "@emotion/react" "^11.10.5"
+    "@emotion/styled" "^11.10.5"
+    "@mui/material" "^5.12.2"
+
 "@backstage/types@^1.1.0", "@backstage/types@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@backstage/types/-/types-1.1.1.tgz#c9ccb30357005e7fb5fa2ac140198059976eb076"
