@@ -2,7 +2,7 @@
 
 > [Backstage](https://backstage.io/) plugins to view [dbt doc](https://www.getdbt.com/product/data-documentation/).
 
-[![npm version](https://badge.fury.io/js/@iiben_orgii%2Fbackstage-plugin-dbt.svg)](https://badge.fury.io/js/@iiben_orgii%2Fbackstage-plugin-dbt)
+![npm (scoped)](https://img.shields.io/npm/v/@iiben_orgii/backstage-plugin-dbt-backend)
 ![latest workflow pr](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/pr-build-test.yml/badge.svg)
 ![latest workflow release](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/pre-release.yml/badge.svg)
 ![latest workflow prerelease](https://github.com/IIBenII/backstage-plugin-dbt/actions/workflows/release.yml/badge.svg)
