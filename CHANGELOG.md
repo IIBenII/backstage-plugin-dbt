@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-alpha.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v2.0.0...v2.1.0-alpha.0) (2024-05-17)
+
+### Features
+
+- Add dbtdoc-path annotation ([#244](https://github.com/IIBenII/backstage-plugin-dbt/issues/244)) ([33361e8](https://github.com/IIBenII/backstage-plugin-dbt/commit/33361e8300e1b51695111fcf4e4623dabf6ad8e8))
+
 # [2.0.0](https://github.com/IIBenII/backstage-plugin-dbt/compare/v2.0.0-alpha.0...v2.0.0) (2024-05-16)
 
 **Note:** Version bump only for package root
