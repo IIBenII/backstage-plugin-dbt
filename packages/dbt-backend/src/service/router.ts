@@ -41,7 +41,17 @@ export async function createRouter(options: RouterOptions): Promise<express.Rout
     const bucketPath = req.query.bucketPath;
     const backend = config.getString('dbtdoc.backend')
 
-    const filePath = bucketPath ? `${bucketPath}/${type}.json` : `${kind}/${name}/${type}.json`;
+    let filePath: string;
+
+    if (bucketPath == ".") {
+      filePath = `${type}.json`;
+    }
+    else if (bucketPath) {
+      filePath = `${bucketPath}/${type}.json`;
+    }
+    else {
+      filePath = `${kind}/${name}/${type}.json`;
+    }
     const fullPath = `${bucket}/${filePath}`;
 
     let storageProvider: StorageProvider;
